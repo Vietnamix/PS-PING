@@ -59,7 +59,7 @@ $script:pingCount = 0
 $script:interval  = $Interval
 
 # ============================================================
-# ✅ Fonctions compatibles ConstrainedLanguage
+#  Fonctions compatibles ConstrainedLanguage
 # ============================================================
 function Round-Int {
     param([double]$n)
@@ -67,7 +67,7 @@ function Round-Int {
     return [int]$n
 }
 
-# ✅ Timestamp propre — evite notation scientifique
+#  Timestamp propre — evite notation scientifique
 function Get-NowMs {
     $epoch = [datetime]"1970-01-01 00:00:00"
     $span  = (Get-Date).ToUniversalTime() - $epoch
@@ -115,7 +115,7 @@ function Calc-Stats {
     return @{ loss=$loss; uptime=(100-$loss); avgV=$avgV; lastV=$lastV; minStr=$minStr; maxStr=$maxStr }
 }
 
-# ✅ Timestamps forces en entier long propre
+#  Timestamps forces en entier long propre
 function Write-DataJs {
     $parts = @()
     for ($i=0; $i -lt $script:pingCount; $i++) {
@@ -214,7 +214,7 @@ function Open-Browser {
 }
 
 # ============================================================
-# ✅ Generation HTML
+#  Generation HTML
 # ============================================================
 function Write-HtmlOnce {
     param([string]$target)
@@ -509,7 +509,7 @@ function updNxt(){
 }
 
 // ============================================================
-// ✅ Helpers timestamps — protection NaN et notation scientifique
+//  Helpers timestamps — protection NaN et notation scientifique
 // ============================================================
 function ft(ms){
   var n=parseInt(ms,10);
@@ -527,7 +527,7 @@ function fm(ms){
 }
 
 // ============================================================
-// ✅ Plugin barres verticales — enregistre AVANT new Chart()
+//  Plugin barres verticales — enregistre AVANT new Chart()
 // ============================================================
 Chart.register({
   id:'vlines',
@@ -571,7 +571,7 @@ Chart.register({
       ctx2.setLineDash([4,3]);
       ctx2.globalAlpha=0.8;
 
-      // ✅ Deduplication : une seule barre par label "HH:mm"
+      //  Deduplication : une seule barre par label "HH:mm"
       var drawn={};
       data.minLines.forEach(function(ml){
         if(drawn[ml.label])return;
@@ -637,7 +637,7 @@ var ch=new Chart(cx,{
   }
 });
 
-// ✅ Donnees barres attachees a chart.config (accessible par le plugin)
+//  Donnees barres attachees a chart.config (accessible par le plugin)
 ch.config._vlines={toLines:[],minLines:[]};
 
 // ============================================================
@@ -698,7 +698,7 @@ document.addEventListener('mouseup',function(){
 });
 
 // ============================================================
-// ✅ Graphique — une seule mise a jour par cycle
+//  Graphique — une seule mise a jour par cycle
 // ============================================================
 function uc(){
   var mp=gmp(),tot=aD.length,cw=cx.canvas.offsetWidth;
@@ -710,7 +710,7 @@ function uc(){
   var lb=[],vs=[],tv=[],pr2=[],pb=[],pd=[];
   var toLines=[],minLines=[];
 
-  // ✅ prevMinKey base sur timestamp reel converti correctement
+  //  prevMinKey base sur timestamp reel converti correctement
   var prevMinKey='__INIT__';
 
   var s=getComputedStyle(document.documentElement);
@@ -720,19 +720,19 @@ function uc(){
   var pttob=s.getPropertyValue('--pttob').trim()||'rgba(255,50,50,1)';
 
   sl2.forEach(function(d,i){
-    // ✅ Forcer entier pour eviter NaN
+    //  Forcer entier pour eviter NaN
     var ts=parseInt(d.t,10);
     var timeStr=ft(ts);
-    // ✅ Cle minute basee sur timestamp reel
+    //  Cle minute basee sur timestamp reel
     var minKey=fm(ts);
 
-    // ✅ Barre de minute : seulement si la minute change ET i>0
+    //  Barre de minute : seulement si la minute change ET i>0
     if(i>0 && minKey!=='--:--' && minKey!==prevMinKey){
       minLines.push({x:i, label:minKey});
     }
     prevMinKey=minKey;
 
-    // ✅ Label axe X : visible seulement au changement de minute
+    //  Label axe X : visible seulement au changement de minute
     if(i>0 && minKey!==fm(parseInt(sl2[i-1].t,10))){
       lb.push(timeStr);
     } else {
@@ -770,13 +770,13 @@ function uc(){
   ch.options.scales.y.ticks.color=s.getPropertyValue('--tickY').trim();
   ch.options.scales.y.grid.color=s.getPropertyValue('--grid2').trim();
 
-  // ✅ Barres via chart.config._vlines — accessible par le plugin
+  //  Barres via chart.config._vlines — accessible par le plugin
   ch.config._vlines={toLines:toLines,minLines:minLines};
 
   var vv=vs.filter(function(v2){return v2!==null;});
   if(vv.length>0)ch.options.scales.y.max=Math.ceil(Math.max.apply(null,vv)/10)*10+10;
 
-  // ✅ Un seul update
+  //  Un seul update
   ch.update('none');
 }
 
@@ -854,7 +854,7 @@ function applyT(){
 function doReset(){vo=Math.max(0,aD.length-gmp());sl(true);uc();usb();}
 
 // ============================================================
-// ✅ Chargement donnees — UN SEUL appel uc() par cycle
+//  Chargement donnees — UN SEUL appel uc() par cycle
 // ============================================================
 function loadData(){
   if(pr)return;
@@ -865,7 +865,7 @@ function loadData(){
     if(window.PD){
       var d=window.PD;
       if(d.items.length>ldc){
-        // ✅ Forcer parseInt sur chaque item pour eviter NaN
+        //  Forcer parseInt sur chaque item pour eviter NaN
         d.items.slice(ldc).forEach(function(p){
           aD.push({t:parseInt(p.t,10),v:parseInt(p.v,10)});
         });
@@ -879,7 +879,7 @@ function loadData(){
       }
       uu(d);
       usb();
-      // ✅ Un seul appel uc() ici
+      //  Un seul appel uc() ici
       if(live)uc();
     }
   };
@@ -887,7 +887,7 @@ function loadData(){
   document.head.appendChild(s);
 }
 
-// ✅ Un seul timer de chargement
+//  Un seul timer de chargement
 loadData();
 setInterval(loadData,2000);
 startCD();
