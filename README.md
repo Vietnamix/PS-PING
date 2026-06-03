@@ -15,7 +15,7 @@ PS-PING surveille en continu la latence vers une cible (par défaut `8.8.8.8`), 
 ## 📸 Preview
 
 <p align="center">
-  <img src="PS_PING_2026-06-02.png" alt="PS_NCDU" width="90%">
+  <img src="PS-PING_2026-06-02.png" alt="PS_NCDU" width="90%">
 </p>
 
 ---
