@@ -319,6 +319,6 @@ Distribué sous licence MIT. Voir le fichier [`LICENSE.md`](License.md) pour les
 
 ## Auteur
 
-**Eric Guiffault** — PS-PING Ping Monitor
+**[Eric Guiffault](https://eric.guiffault.com)** — PS-PING Ping Monitor
 
 > Un outil de diagnostic réseau simple, autonome et lisible, pensé pour les environnements Windows verrouillés.
